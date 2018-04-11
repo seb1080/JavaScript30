@@ -55,55 +55,13 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<!-- <script>
-
-  // Version onClick event
-
-
-  // autoreload-server -w "**/**.{html,css,js}"
-
-  const keys = document.getElementsByClassName('keys')
-  const childrens = Array.from(keys[0].children)  
-
-  const audioTags = Array.from(document.getElementsByTagName('audio'))
-  const audioMap = new Map()
-  const delay = 200 // milliseconds
-
-  audioTags.forEach( tag => {
-    audioMap.set( tag.dataset.key, tag.attributes[1].nodeValue)
-  })
-
-  childrens.forEach( children => {
-    children.addEventListener('click', () => {
-      const soundStr = audioMap.get(children.dataset.key)
-      dataKey = document.querySelector(`[data-key='${children.dataset.key}']`)
-      hitTheKey(dataKey, delay)    
-      playSound(soundStr)
-      
-    })
-  })
-
-  // Utility functions
-  function playSound(soundStr) {
-    return new Audio(soundStr).play()
-  }
-
-
-  function hitTheKey(element, delay) {
-      element.classList.add('playing')      
-      setTimeout( () => {
-        element.classList.remove('playing')
-      }, delay)
-  }
-</script> -->
-
 <script>
 
     // Version on keyboard press
 
     const keys = document.getElementsByClassName('keys')
-    const childrens = Array.from(keys[0].children)  
-  
+    const childrens = Array.from(keys[0].children).map( (child) => { return parseInt(child.dataset.key) })
+
     const audioTags = Array.from(document.getElementsByTagName('audio'))
     const audioMap = new Map()
     const delay = 200 // milliseconds
@@ -114,14 +72,15 @@
 
     document.addEventListener('keydown', (e) => {
       let keyDown = e.keyCode
-    
-      const dataKey =  getHtmlElementByDataKey(keyDown)
-      const soundStr = audioMap.get(`${keyDown}`)      
-      hitTheKey(dataKey, delay)    
-      playSound(soundStr)
-  
+
+      if(childrens.includes( keyDown)) {
+        const dataKey =  getHtmlElementByDataKey(keyDown)
+        const soundStr = audioMap.get(`${keyDown}`)      
+        hitTheKey(dataKey, delay)    
+        playSound(soundStr)
+      }
     })  
-    // Utility functions
+    // Functions
     function playSound(soundStr) {
       return new Audio(soundStr).play()
     }
@@ -135,11 +94,6 @@
   function getHtmlElementByDataKey(keyNumber) {
     return document.querySelector(`[data-key='${keyNumber}']`)
   }
-
   </script>
-
-
-
-
 </body>
 </html>
