@@ -57,21 +57,23 @@
 
 <script>
 
-  // Get the all the keys as array
-  const keys = Array.from(document.getElementsByClassName('key'))
+  const keys = document.getElementsByClassName('keys')
+  const childrens = Array.from(keys[0].children)  
 
-  // Add the EventListener to all key
-  keys.forEach( key => {
-    key.addEventListener('click', (e) => {
-      console.log('key have been click', `${e}`)
+  const audioTags = Array.from(document.getElementsByTagName('audio'))
+  const audioMap = new Map()
 
-      
-    })
+  audioTags.forEach( tag => {
+    audioMap.set( tag.dataset.key, tag.attributes[1].nodeValue)
   })
 
-
-
-
+  childrens.forEach( children => {
+    children.addEventListener('click', (e) => {
+      const soundStr = audioMap.get(children.dataset.key)
+      const audio = new Audio(soundStr)
+      audio.play()    
+    })
+  })
 </script>
 </body>
 </html>
