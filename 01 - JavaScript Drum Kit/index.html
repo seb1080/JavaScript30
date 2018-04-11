@@ -56,24 +56,43 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  // autoreload-server -w "**/**.{html,css,js}"
 
   const keys = document.getElementsByClassName('keys')
   const childrens = Array.from(keys[0].children)  
 
   const audioTags = Array.from(document.getElementsByTagName('audio'))
   const audioMap = new Map()
+  const delay = 200 // milliseconds
 
   audioTags.forEach( tag => {
     audioMap.set( tag.dataset.key, tag.attributes[1].nodeValue)
   })
 
   childrens.forEach( children => {
-    children.addEventListener('click', (e) => {
+    children.addEventListener('click', () => {
       const soundStr = audioMap.get(children.dataset.key)
-      const audio = new Audio(soundStr)
-      audio.play()    
+      dataKey = document.querySelector(`[data-key='${children.dataset.key}']`)
+      hitTheKey(dataKey, delay)    
+      playSound(soundStr)
+      
     })
   })
+
+  // Utility functions
+  function playSound(soundStr) {
+    return new Audio(soundStr).play()
+  }
+
+  function hitTheKey(element, delay) {
+      element.classList.add('playing')      
+      setTimeout( () => {
+        element.classList.remove('playing')
+      }, delay)
+  }
+
+
+
 </script>
 </body>
 </html>
