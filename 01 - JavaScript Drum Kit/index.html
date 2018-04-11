@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -59,8 +57,21 @@
 
 <script>
 
+  // Get the all the keys as array
+  const keys = Array.from(document.getElementsByClassName('key'))
+
+  // Add the EventListener to all key
+  keys.forEach( key => {
+    key.addEventListener('click', (e) => {
+      console.log('key have been click', `${e}`)
+
+      
+    })
+  })
+
+
+
+
 </script>
-
-
 </body>
 </html>
