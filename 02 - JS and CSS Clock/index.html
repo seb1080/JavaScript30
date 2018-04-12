@@ -5,17 +5,13 @@
   <title>JS + CSS Clock</title>
 </head>
 <body>
-
-
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand" id="hour-hand"></div>
+        <div class="hand" id="minute-hand"></div>
+        <div class="hand" id="second-hand"></div>
       </div>
     </div>
-
-
   <style>
     html {
       background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
@@ -62,12 +58,57 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(90deg);
+      transform-origin: right;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 
   </style>
-
   <script>
 
+      const delay = 1000
+
+      let hourHand = document.getElementById('hour-hand')
+      let minuteHand = document.getElementById('minute-hand')
+      let secondHand = document.getElementById('second-hand')
+
+      // Functions
+      function displayTime() {
+        const timestamp = new Date()  
+        drawSeconds(secondHand, timestamp)
+        drawMinutes(minuteHand, timestamp)
+        drawHours(hourHand, timestamp)
+      }
+
+      function drawSeconds(elementTag, timestamp) {
+        const deg = sec2Deg(timestamp.getSeconds())
+        elementTag.style.transform = (`rotate(${deg}deg)`)
+      }
+
+      function drawMinutes(elementTag, timestamp) {
+        const deg = sec2Deg(timestamp.getMinutes())
+        elementTag.style.transform = (`rotate(${deg}deg)`)
+      }
+
+      function drawHours(elementTag, timestamp) {
+        const deg = hour2Deg(timestamp.getHours())
+        elementTag.style.transform = (`rotate(${deg}deg)`)
+      }
+
+      function sec2Deg(sec) {
+         return sec * 6
+      }
+
+      function min2Deg(min) {
+         return min * 6
+      }
+
+      function hour2Deg(hour) {
+         return hour * 15
+      }
+
+      setInterval(displayTime, delay)
 
   </script>
 </body>
