@@ -30,7 +30,7 @@
     :root {
       --main-color: #ffc600;
       --img-blur: 0;
-      --img-spacing:0;
+      --img-spacing: 0;
     }
 
     body {
@@ -51,6 +51,9 @@
     }
     
     img {
+      filter: blur( var(--img-blur));
+      padding-top: var(--img-spacing);
+      padding-left: var(--img-spacing); 
       border: 10px solid;
       border-color: var(--main-color);
       background-color: var(--main-color); 
@@ -61,19 +64,29 @@
   <script>
 
     // autoreload-server -w "**/**.{html,css,js}"
+    // http://localhost:8080/index.html
+    
+    const style = document.documentElement.style;
+    const mainColor = document.querySelector("input[type='color']")
     
     const inputSpacing = document.querySelector("input[name='spacing']")
     const inputBlur = document.querySelector("input[name='blur']")
-    const mainColor = document.querySelector("input[type='color']")
-    const style = document.documentElement.style;
-    
-    const img = document.querySelector('img')
 
-    inputSpacing.addEventListener('change', watchInputSpacing, false)
+    const inputs = [inputSpacing, inputBlur]
 
-    inputBlur.addEventListener('input', watchInputBlur, false)
 
-    mainColor.addEventListener('change', watchColorInput)
+  mainColor.addEventListener('change', () => {
+    style.setProperty(`--main-color`, `${event.target.value}`)
+  })
+
+  inputSpacing.addEventListener('change', () => {
+    style.setProperty(`--img-spacing`, `${event.target.value}px`)
+  })
+
+  inputBlur.addEventListener('change', () => {
+    style.setProperty(`--img-blur`, `${event.target.value}px`)
+  })
+
 
 
     // Functions
@@ -90,9 +103,6 @@
       style.setProperty(`--main-color`, event.target.value) 
     }
     
-
-
-
   </script>
 
 </body>
