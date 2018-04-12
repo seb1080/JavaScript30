@@ -42,6 +42,10 @@
       font-size: 50px;
     }
 
+    .hl {
+      color: var(--img-base);
+    }
+
     .controls {
       margin-bottom: 50px;
     }
@@ -74,16 +78,29 @@
       inputsMap.set(input.id, input.name)
     })
     
-    inputs.forEach( (input) => {
-      input.addEventListener('change', (e) => { 
-          // Managing the base case with out pixel 
-          if (!e.target.name.includes('base')) {
-            style.setProperty(`--img-${inputsMap.get(e.target.name)}`, `${event.target.value}px`)
+    // inputs.forEach( (input) => {
+    //   input.addEventListener('change', (e) => { 
+    //       // Managing the base case with out pixel 
+    //       if (!e.target.name.includes('base')) {
+    //         style.setProperty(`--img-${inputsMap.get(e.target.name)}`, `${event.target.value}px`)
+    //       } else {
+    //         style.setProperty(`--img-${inputsMap.get(e.target.name)}`, `${event.target.value}`)
+    //       }
+    //   })
+    // })
+
+    inputs.forEach( input => input.addEventListener('change', setVariables))
+    inputs.forEach( input => input.addEventListener('mousemouve', setVariables))
+
+    function setVariables() {
+      if (!this.name.includes('base')) {
+            style.setProperty(`--img-${inputsMap.get(this.name)}`, `${this.value}px`)
           } else {
-            style.setProperty(`--img-${inputsMap.get(e.target.name)}`, `${event.target.value}`)
+            style.setProperty(`--img-${inputsMap.get(this.name)}`, `${this.value}`)
           }
-      })
-    })
+    }
+
+
 
   </script>
     
