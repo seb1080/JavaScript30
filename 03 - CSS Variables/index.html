@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" 
+      max="200" value="10" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" 
+      max="25" value="10" data-sizing="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="./img/hiking.jpg">
+
+  <style>
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+    :root {
+      --main-color: #ffc600;
+      --img-blur: 0;
+      --img-spacing:0;
+    }
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width:100px;
+    }
+    
+    img {
+      border: 10px solid;
+      border-color: var(--main-color);
+      background-color: var(--main-color); 
+    }
+
+  </style>
+
+  <script>
+
+    // autoreload-server -w "**/**.{html,css,js}"
+    
+    const inputSpacing = document.querySelector("input[name='spacing']")
+    const inputBlur = document.querySelector("input[name='blur']")
+    const mainColor = document.querySelector("input[type='color']")
+    const style = document.documentElement.style;
+    
+    const img = document.querySelector('img')
+
+    inputSpacing.addEventListener('change', watchInputSpacing, false)
+
+    inputBlur.addEventListener('input', watchInputBlur, false)
+
+    mainColor.addEventListener('change', watchColorInput)
+
+
+    // Functions
+    function watchInputSpacing() {
+      console.log('event.target.value : ', event.target.value )
+      img.style.cssText = `padding-left: ${event.target.value}px`
+    }
+
+    function watchInputBlur() {
+      img.style.webkitFilter = `blur(${event.target.value}px)`;
+    }
+
+    function watchColorInput() {
+      style.setProperty(`--main-color`, event.target.value) 
+    }
+    
+
+
+
+  </script>
+
+</body>
+</html>
