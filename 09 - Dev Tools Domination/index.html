@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+  <p onClick="makeGreen()">×BREAK×DOWN×  &#x1F37F;</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log(`Regular ⏰`)
+
+    // Interpolated
+    console.log('I can insert %s   unicorn emoji.', '🦄')
+    
+    // Styled
+    console.log('I can be text and %c style ','font-size: 30px; background:red')
+    
+    // warning!
+    console.warn(` %c Danger`, 'font-size:20px; color:red')
+
+    // Error:
+      console.error('Text that explain error')
+
+    // Info
+    console.info(`display info to the user`)
+
+    // Testing
+  console.assert(1 != 1, ' That will display if wrong')
+
+    // clearing
+    console.clear()
+
+    // Viewing DOM Elements
+    const p = document.querySelector('p')
+    console.log(p)
+
+    console.dir(p) // Display an interactive list of
+                  // the properties of the specified JS object.
+
+    // Grouping together
+    dogs.forEach( d => {
+      // console.group(`${d.name}`)
+      console.groupCollapsed(`Dog name : ${d.name}`)
+      console.log(`name :${d.name}`)
+      console.log(`age :${d.age}`)
+      console.groupEnd(`age :${d.name}`)
+
+    })
+
+    // table
+    console.table(dogs)
+
+    // counting
+    console.count('Sebastien')
+    console.count('Blais')
+    console.count('Sebastien')
+    console.count('Blais')
+    console.count('Blais')
+    console.count('Blais')
+    console.count('Sebastien')
+    console.count('Sebastien')
+    console.count('Sebastien')
+
+    // timing
+    console.clear()
+    console.time('Fetching data from github')
+    const url = `https://api.github.com/users/seb1080`
+    fetch(url)
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetch data')
+        console.dir(data)
+      })
+
+
+  </script>
+</body>
+</html>
