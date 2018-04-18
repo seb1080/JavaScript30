@@ -20,7 +20,7 @@
     const width = canvas.width = window.innerWidth
 
     const line = {
-      width: 8,
+      size: 8,
       prevX: '',
       prevY: '',
       color: {
@@ -72,24 +72,26 @@
       return `rgb(${target.color.r}, ${target.color.g}, ${target.color.b})`
     }
 
-    function getTargetSize() {
+    function getTargetSize(target) {
         if (mouseClicked) {
-          pointer.size += 0.2
+          target.size += 0.2
         }
     }
 
     function drawCircle() {
+        getTargetSize(pointer)
         ctx.beginPath()
-        getTargetSize()
         ctx.arc(event.clientX, event.clientY, pointer.size, 0, 2 * Math.PI)
-        ctx.fillStyle = getRandomColor(line)
+        ctx.fillStyle = getRandomColor(pointer)
         ctx.fill()
     }
 
     function drawLine() {
-      ctx.lineWidth = line.width
+      getTargetSize(line)
+      ctx.lineWidth = line.size
       ctx.lineJoin = 'round'
-      ctx.strokeStyle = getRandomColor(line)
+      ctx.lineCap = 'round'
+      ctx.strokeStyle = getRandomColor(pointer)
       ctx.beginPath()
       ctx.moveTo(line.prevX, line.prevY)
       ctx.lineTo(event.clientX, event.clientY)
