@@ -5,24 +5,48 @@
   <title>HTML5 Canvas</title>
 </head>
 <body>
-  <canvas id="draw" width="800" height="800"></canvas>
+  <canvas id="canvas"></canvas>
 
 <style>
     html, body {
-      margin:0;
-    }
-    canvas {
-      height: 100vh;
-      width: 100vw;
+      margin:0
     }
   </style>
 
-  <script>
-  
-    const cvs = document.querySelector('#draw')
+  <!-- Draw on canvas ability -->
+
+  <script>  
+    const canvas = document.querySelector('#canvas')
+    const ctx = canvas.getContext('2d')
+    const height = canvas.height = window.innerHeight
+    const width = canvas.width = window.innerWidth
+
+    let mouseClicked = false, mouseReleased = true 
+
+    canvas.addEventListener('click', setMouseOnCliked, false)
+    canvas.addEventListener('mousemove', drawPointer, false)
+
+    // Functions
+    function setMouseOnCliked() {
+        mouseClicked = !mouseClicked
+    }
+    function getRandomInt(max = 255) {
+      return Math.floor(Math.random() * Math.floor(max))
+    }
     
+    function getRandomColor() {
+      return `rgb(${getRandomInt(255)}, ${getRandomInt(255)}, ${getRandomInt(255)})`
+    }
+
+    function drawPointer() {
+      if (mouseClicked) {
+        ctx.beginPath()
+        ctx.arc(event.clientX, event.clientY, 20, 0, 2 * Math.PI)
+        ctx.fillStyle = getRandomColor()
+        ctx.fill()
+        ctx.stroke()
+      }
+    }
   </script>
-
-
   </body>
 </html>
