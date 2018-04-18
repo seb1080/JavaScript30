@@ -12,16 +12,17 @@
       margin:0
     }
   </style>
-
   <!-- Draw on canvas ability -->
-
   <script>  
     const canvas = document.querySelector('#canvas')
     const ctx = canvas.getContext('2d')
     const height = canvas.height = window.innerHeight
     const width = canvas.width = window.innerWidth
+    const pointer = {
+      size: 10,
+    }
 
-    let mouseClicked = false, mouseReleased = true 
+    let mouseClicked = false, mouseReleased = true
 
     canvas.addEventListener('click', setMouseOnCliked, false)
     canvas.addEventListener('mousemove', drawPointer, false)
@@ -29,6 +30,7 @@
     // Functions
     function setMouseOnCliked() {
         mouseClicked = !mouseClicked
+        pointer.size = 10
     }
     function getRandomInt(max = 255) {
       return Math.floor(Math.random() * Math.floor(max))
@@ -37,16 +39,22 @@
     function getRandomColor() {
       return `rgb(${getRandomInt(255)}, ${getRandomInt(255)}, ${getRandomInt(255)})`
     }
+    function getPointerSize() {
+        if (mouseClicked) {
+          pointer.size += 0.2
+        }
+    }
 
     function drawPointer() {
       if (mouseClicked) {
         ctx.beginPath()
-        ctx.arc(event.clientX, event.clientY, 20, 0, 2 * Math.PI)
+        getPointerSize()
+        ctx.arc(event.clientX, event.clientY, pointer.size, 0, 2 * Math.PI)
         ctx.fillStyle = getRandomColor()
         ctx.fill()
-        ctx.stroke()
       }
     }
   </script>
   </body>
 </html>
+pointer
