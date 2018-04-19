@@ -22,7 +22,7 @@
 
     .item {
       display:flex;
-      align-items:center;
+      align-checkboxs:center;
       border-bottom: 1px solid #F1F1F1;
     }
 
@@ -98,7 +98,43 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+    const checkboxs = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'))
+
+    let lastCheckbox;
+
+  // Functions
+  function haveChecked(e) {
+    let inBetween = false
+    if (e.shiftKey && this.checked) {
+      checkboxs.forEach( c => {
+        
+        if (c === this || c === lastCheckbox) inBetween = !inBetween
+
+        if (inBetween) c.checked = true
+      
+      })
+    }
+    lastCheckbox = this
+  }
+
+  // function ShiftKeyDown() {
+  //   if (event.key === 'Shift') {
+  //     groupControl.shiftKeyDown = true
+  //   }
+  // }
+  // function ShiftKeyUp() {
+  //   if (event.key === 'Shift') {
+  //     groupControl.shiftKeyDown = false
+  //   }
+  // }
+
+  // AddEventListener
+  checkboxs.forEach( i => i.addEventListener('click', haveChecked))
+  // document.addEventListener('keydown' , ShiftKeyDown)
+  // document.addEventListener('keyup' , ShiftKeyUp)
+
+
+  </script>
 </body>
 </html>
