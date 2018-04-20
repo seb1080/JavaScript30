@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+
+  const konamiCode = [
+  "ArrowUp",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight",
+  "b",
+  "a"
+  ]
+  const secretCode = [
+  "s",
+  "e",
+  "b",
+  ]
+  let keys = []
+
+  // Function 
+  function isKonima(e) {
+    let isValid = false
+
+    keys.push(e.key)
+    
+    
+    
+    if (!konamiCode.includes(e.key) || keys.length >= konamiCode.length) {
+      keys = []
+    } else {
+    }
+
+    
+    if (JSON.stringify(keys) === JSON.stringify(konamiCode)) isValid = true
+    
+    console.log(`isKonima ${isValid}`)
+    return isValid 
+  }
+
+  function isSecretCode(e) {
+    keys.push(e.key)    
+    keys.splice(-secretCode.length - 1, keys.length - secretCode.length)
+    
+    if (JSON.stringify(keys) === 
+        JSON.stringify(secretCode)) alert('You win a special price')
+  }
+
+
+  // AddEventListener
+  window.addEventListener('keyup', isSecretCode)
+
+</script>
+</body>
+</html>
