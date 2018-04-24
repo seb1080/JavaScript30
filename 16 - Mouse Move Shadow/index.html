@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥 WOAH!</h1>
+  </div>
+
+  <style>
+  :root {
+    --walk-hg: 10px;
+    --walk-wd: 10px;
+    }
+  
+  html {
+    color:black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 red;
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+  const hero = document.querySelector('.hero')
+  const woah = document.querySelector('h1')
+  const walk = {max: 100} // unit in px
+
+
+  const style = document.documentElement.style
+
+  // Functions
+  function setShadow(e) {
+    // const { offsetWidth: width, offsetHeight: height } = hero // Obj Destructuring
+    const { offsetWidth, offsetHeight } = woah // Obj Destructuring
+    const { left, top } = woah.getBoundingClientRect() 
+    let { offsetX, offsetY } = e // Obj Destructuring, with short syntax
+
+    const delta = {
+      x: left + offsetWidth / 2 - offsetX,
+      y: top + offsetHeight / 2 - offsetY
+    }
+
+    console.log(`delta.x, delta.y : `,   delta.x, delta.y)
+
+    const shadow = { x: delta.x/10, y: delta.y/10  }
+
+    style.setProperty(`--shadow-hg`, shadow.y)
+    style.setProperty(`--shadow-wd`, shadow.x)
+  }
+
+  function debounce(func, wait = 20, immediate = true) {
+    var timeout
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    }
+  }
+
+  function shadow(e) {
+    const { offsetWidth, offsetHeight } = hero;
+    let { offsetX: x, offsetY: y } = e  
+
+    if (this !== e.target) {
+      // don't set the values back to 0 when mouseover h1 woah  
+      x = x + e.target.offsetLeft
+      y = y + e.target.offsetTop 
+    }
+
+    walk.x = Math.round( (x/offsetWidth * walk.max) - walk.max/2 ) 
+    walk.y = Math.round( (y/offsetHeight * walk.max) - walk.max/2 )
+
+    woah.style.textShadow = `${walk.x}px ${walk.y}px 0 red`
+  }
+
+  hero.addEventListener('mousemove', shadow)
+
+</script>
+</body>
+</html>
