@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background:mistyrose;
+  }
+
+  .three {
+    background:coral;
+  }
+</style>
+<script>
+  const divs = document.querySelectorAll('div')
+
+  function logText(e) {
+    console.log( this.classList.value )
+
+  }
+  // Capturing : The capturing phase of the event is top to bottom of the document
+
+  // To cath a event on the capturing phase,
+  // we need to set the 3rd argument of addEventListener to true.
+  
+  // ex: elem.addEventListener('event', func(), true )
+  
+  // Bubbling : When an event happens on an element, it first runs the handlers on it,
+  // then on its parent. then all the way up on other ancestors.
+
+  // The Bubbling phase of the event is bottom to top of the document
+
+  // event.stopPropagation() can be use to stop bubbling
+
+
+  divs.forEach(d => d.addEventListener('click', logText, 
+                        { capture: true, 
+                          once: true  // run only once 
+                        }))
+
+</script>
+</body>
+</html>
