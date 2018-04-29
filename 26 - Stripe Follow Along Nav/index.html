@@ -10,7 +10,6 @@
     <div class="dropdownBackground">
       <span class="arrow"></span>
     </div>
-
     <ul class="cool">
       <li>
         <a href="#">About Me</a>
@@ -46,7 +45,7 @@
           </li>
           <li>
             <span class="code">GRID</span>
-            <a href="https://CSSGrid.io">CSS Grid</a>
+            <a+ 10 href="https://CSSGrid.io">CSS Grid</a>
           </li>
           <li>
             <span class="code">LRX</span>
@@ -117,7 +116,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: flex;active
     justify-content: center;
   }
 
@@ -147,9 +146,6 @@
   .trigger-enter-active .dropdown {
     opacity: 1;
   }
-
-
-
   .dropdownBackground {
     width:100px;
     height:100px;
@@ -203,7 +199,7 @@
   .dropdown a {
     text-decoration: none;
     color: #ffc600;
-  }
+  }arrow
 
   a.button {
     background:black;
@@ -219,9 +215,49 @@
   .button[href*=facebook] { background: #3B5998; }
   .button[href*=courses] { background: #ffc600; }
 </style>
-
 <script>
-</script>
+// autoreload-server -w "**/**.{html,css,js}"
 
+  const triggers = document.querySelectorAll('.cool > li')
+  const bg = document.querySelector('.dropdownBackground')
+  const nav = document.querySelector('.top')
+
+
+  function handleEnter() {
+    this.classList.add('trigger-enter')
+    setTimeout( () => {
+      if(this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active')
+      }
+    }, 150) 
+    bg.classList.add('open')
+    
+    const dropdown = this.querySelector('.dropdown')
+    const dropdownCoords = dropdown.getBoundingClientRect()
+    const navCoords = nav.getBoundingClientRect()  
+
+    const coords = {
+      h: dropdownCoords.height,
+      w: dropdownCoords.width,
+      t: dropdownCoords.top - navCoords.top,
+      l: dropdownCoords.left - navCoords.left
+    }
+    bg.style.setProperty('width', `${coords.w}px`)
+    bg.style.setProperty('height', `${coords.h}px`)
+    bg.style.setProperty('top', `${coords.t}px`)
+    bg.style.setProperty('left', `${coords.l}px`)    
+  }
+
+  function handleLeave() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active')
+    bg.classList.remove('open')
+  }
+
+  triggers.forEach(t => t.addEventListener('mouseenter',handleEnter ))
+  triggers.forEach(t => t.addEventListener('mouseleave',handleLeave ))
+
+
+
+</script>
 </body>
 </html>
