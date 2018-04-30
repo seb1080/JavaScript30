@@ -33,9 +33,35 @@
     <div class="item item24">24</div>
     <div class="item item25">25</div>
   </div>
-
 <script>
-</script>
 
+  //  autoreload-server -w "**/**.{html,css,js}"
+
+  const slider = document.querySelector('.items')
+  let isDown = false
+  let startX, scrollLeft
+
+  function handleScrollX(e) {
+    e.preventDefault()
+    if (isDown) {
+      const x = e.pageX - slider.offsetLeft
+      slider.scrollLeft = scrollLeft - (x - startX) * 3
+    }
+  }
+
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true
+    slider.classList.add('active')
+    startX = e.pageX - slider.offsetLeft
+    scrollLeft = slider.scrollLeft
+    })
+  slider.addEventListener('mouseleave', () => { 
+  isDown = false
+  slider.classList.remove('active')
+  })
+  slider.addEventListener('mouseup', () => { isDown = false  })
+  slider.addEventListener('mousemove', handleScrollX )
+
+</script>
   </body>
 </html>
