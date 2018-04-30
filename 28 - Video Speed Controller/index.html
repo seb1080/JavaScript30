@@ -19,9 +19,7 @@
   const speed = document.querySelector('.speed')
   const bar = document.querySelector('.speed-bar')
   const video = document.querySelector('video')
-
-  // console.log(speed, bar, video)  
-
+  
   speed.addEventListener('mousemove', function(e) {
     const min = 0.4, max = 4.0, norm = 0.17
     const y = e.pageY - this.offsetTop // 70 == 1x
